@@ -57,44 +57,56 @@ These data were analyzed in detail in the following article:
 
 """
 
-
+import numpy as np
 """
 1. Use the <var> = np.loadtxt(<file>) to read the data into an array. Use <array>.shape to see the dimensions of the array with the data.
 """
-
+winddata = np.loadtxt("wind.data")
+print(winddata.shape)
+print(winddata)
+print("\n")
 
 """
 2. As stated in the introduction, the first 3 columns of the data file are the dates. The remaining columns are the wind speed data. Use array slicing to create an array containing only the wind speed data. 
 <var> = <array>[<rows>, <columns>]
 """
-
-
+allwspdata = winddata[:, 3:]
+print(allwspdata)
+print("\n")
 """
 3. Print the minimum (<array>.min()), maximum (<array.max()), mean (<array>.mean()), and standard deviation (<array>.std()), for ALL the wind speed data.)
 """
-
-
+print(allwspdata.min())
+print(allwspdata.max())
+print(allwspdata.std())
+print("\n")
 """
 4. As stated above, each column in the data file contains wind speed data for a different city. Print the min, max, mean, and standard deviation for each city.
 
 The min is found using <array>.min(axis=0)
 """
-
-
+print(allwspdata.min(axis=0))
+print(allwspdata.max(axis=0))
+print(allwspdata.std(axis=0))
+print("\n")
 """
 5. As stated above, each row in the data file contains wind speed data for each day. Print the min, max, mean, and standard deviation for each day.__doc__
 
 The min is found using <array>.min(axis=1)
 """
-
-
+print(allwspdata.min(axis=1))
+print(allwspdata.max(axis=1))
+print(allwspdata.std(axis=1))
+print("\n")
 """
 6. Use <array>.argmax(axis=1) to create an array that shows the index of the windiest city each day. Then use the following code to determine the index of the city that is the windiest most often.
 <var> = np.unique(<array>, return_counts=True)
 """
-
-
-
+windiesteachday = allwspdata.argmax(axis=1)
+print(windiesteachday)
+windiestmostoften = np.bincount(windiesteachday).argmax()
+print(windiestmostoften)
+print("\n")
 """
 7. As stated in the very beginning, the 2nd column (index 1) of the data file is the month number. Use the following code to get the indices of the rows that contain March data:
 <var> = <array>[:, 1] == 3
@@ -102,7 +114,13 @@ Then create a new array containing only the rows that have March data. The follo
 <var> = <array>[<indices>]
 Finally, find the mean wind speed for all of the March data.
 """
-
+rowswmarch = winddata[:,1] == 3
+print(rowswmarch)
+marchdata = winddata[rowswmarch]
+print(marchdata)
+marchdataonly = marchdata[:, 3:]
+marchmean = np.average(marchdataonly)
+print(marchmean)
 """
 BONUS: Create an array with the average wind speed for each month.
 """
